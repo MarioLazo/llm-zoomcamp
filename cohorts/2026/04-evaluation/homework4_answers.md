@@ -111,7 +111,7 @@ Evaluated `hybrid_search` (RRF combining text + vector results) for k ∈ {1, 50
 k=1:   MRR=0.6482  Hit Rate=0.8389  ← best
 k=50:  MRR=0.6379  Hit Rate=0.8361
 k=100: MRR=0.6379  Hit Rate=0.8361
-k=50:  MRR=0.6379  Hit Rate=0.8361
+k=200: MRR=0.6379  Hit Rate=0.8361
 ```
 
 Hybrid search beats either method alone on both metrics. `k=1` gives the best MRR
