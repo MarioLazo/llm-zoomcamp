@@ -1,4 +1,14 @@
-## Homework: TODO
+## Homework: Evaluation
+
+My solution: [hw4/hw4.py](hw4/hw4.py)
+
+**Answers:**
+- Q1: 1400 (avg input tokens)
+- Q2: `01-agentic-rag/lessons/03-rag.md`
+- Q3: `01-agentic-rag/lessons/01-intro.md`
+- Q4: 0.76 (Hit Rate)
+- Q5: 0.55 (MRR)
+- Q6: k=1
 
 ## Learning in Public
 
