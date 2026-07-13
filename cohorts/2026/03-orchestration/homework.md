@@ -145,7 +145,7 @@ Just finished Module 3 - AI Orchestration with @Kestra. Learned how to:
 ✅ Build AI agents that decide which tools to call
 ✅ Orchestrate multi-agent systems
 
-Here's my homework solution: <LINK>
+Here's my homework solution: https://github.com/MarioLazo/llm-zoomcamp/tree/main/cohorts/2026/03-orchestration/hw3
 
 Following along with this amazing free course - who else is learning to build with LLMs?
 
@@ -162,7 +162,7 @@ You can sign up here: https://github.com/DataTalksClub/llm-zoomcamp/
 - RAG-grounded answers
 - AI agents & multi-agent systems
 
-My solution: <LINK>
+My solution: https://github.com/MarioLazo/llm-zoomcamp/tree/main/cohorts/2026/03-orchestration/hw3
 
 Free course by @DataTalksClub: https://github.com/DataTalksClub/llm-zoomcamp/
 ```
