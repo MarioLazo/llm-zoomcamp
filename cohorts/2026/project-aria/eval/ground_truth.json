@@ -1,0 +1,10 @@
+[
+  {"query": "Why do regulated organizations prefer deterministic workflows over agents?", "relevant": ["interview_01_healthcare_ciso.md", "interview_02_bank_head_of_data.md"]},
+  {"query": "What is the risk of a hallucinated number in a financial report?", "relevant": ["interview_02_bank_head_of_data.md"]},
+  {"query": "How do you build team trust in AI systems?", "relevant": ["interview_03_manufacturing_vp.md"]},
+  {"query": "Why treat privacy as a design constraint instead of a checkbox?", "relevant": ["interview_04_privacy_lawyer.md"]},
+  {"query": "What is the value of coding agents in a hospital environment?", "relevant": ["interview_01_healthcare_ciso.md"]},
+  {"query": "Why measure the failure rate of AI-generated code?", "relevant": ["interview_03_manufacturing_vp.md"]},
+  {"query": "Should you index on data you don't have rights to?", "relevant": ["interview_04_privacy_lawyer.md"]},
+  {"query": "What matters more than the agent itself in governance?", "relevant": ["interview_01_healthcare_ciso.md"]}
+]

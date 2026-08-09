@@ -1,0 +1,20 @@
+# secrets & env
+.env
+*.key
+
+# real (private) interview data — never commit
+data/real/*
+!data/real/.gitkeep
+
+# models (downloaded at build time)
+models/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# qdrant / postgres volumes
+qdrant_storage/
+pg_data/

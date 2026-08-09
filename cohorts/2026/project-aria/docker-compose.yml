@@ -1,0 +1,63 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.12.4
+    ports:
+      - "6333:6333"
+    volumes:
+      - ./qdrant_storage:/qdrant/storage
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: vault
+      POSTGRES_PASSWORD: vault
+      POSTGRES_DB: vault
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  app:
+    build: .
+    image: aria-app:latest
+    env_file: .env
+    environment:
+      QDRANT_URL: http://qdrant:6333
+      POSTGRES_DSN: postgresql://vault:vault@postgres:5432/vault
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/data
+      - ./models:/project/models
+    depends_on:
+      - qdrant
+      - postgres
+
+  dashboard:
+    image: aria-app:latest
+    env_file: .env
+    environment:
+      POSTGRES_DSN: postgresql://vault:vault@postgres:5432/vault
+    command: streamlit run monitoring/dashboard.py --server.address=0.0.0.0 --server.port=8502
+    ports:
+      - "8502:8502"
+    depends_on:
+      - app        # ensures the shared aria-app image is built first
+      - postgres
+
+  kestra:
+    image: kestra/kestra:latest
+    command: server standalone
+    env_file: .env
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./ingestion/flows:/app/flows
+      - ./data:/data
+      # The ingest flow launches the aria-app image as a task
+      # container, so Kestra's Docker task runner needs the host socket.
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - qdrant
+      - app          # ensures aria-app:latest exists before flows can use it
