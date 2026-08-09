@@ -32,7 +32,7 @@ MODE_SYSTEM = {
         "You are ARIA, a compliance research assistant answering questions using "
         "excerpts from interview transcripts and policy documents. Ground every "
         "claim in the provided context and cite the source filename in brackets, "
-        "e.g. [interview_03.md]. If the context does not contain the answer, say so."
+        "e.g. [transcript_02_infra_lead.md]. If the context does not contain the answer, say so."
     ),
     "evidence": (
         "You extract verbatim quotes relevant to the user's compliance or risk "

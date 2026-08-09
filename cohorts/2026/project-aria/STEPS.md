@@ -4,6 +4,11 @@ Companion to [`README.md`](README.md) (product/architecture) — this file track
 **what's done, what's left, and the peer review plan** for the LLM Zoomcamp 2026
 capstone.
 
+## ⏰ Deadline
+
+**Project Attempt 2 — due Monday, 17 August 2026, 23:00 UTC.**
+Submit/update here: https://courses.datatalks.club/llm-zoomcamp-2026/project/project2
+
 ## Origin
 
 ARIA started as a general "research assistant over interview transcripts" idea
@@ -12,6 +17,11 @@ regulatory intelligence agent** — a better fit for real-world use (audit
 evidence trails, briefing drafts, grounded-not-guessed answers) and for a
 portfolio aimed at regulated-industry AI delivery work. The architecture didn't
 change; the framing, UI modes, and prompts did.
+
+The sample corpus was then replaced with a single coherent, fully synthetic
+demo scenario — SOC 2 Type II readiness for a fictional bank's website
+hosting environment — instead of generic, unrelated interviews. See
+[`SCENARIO.md`](SCENARIO.md) for the full spec.
 
 ## ✅ Completed
 
@@ -36,10 +46,12 @@ change; the framing, UI modes, and prompts did.
   workflow (`chat` → grounded Q&A, `evidence` → auditable verbatim quotes,
   `briefing` → compliance briefing outline), updated system prompts, Docker
   image names, and the Kestra flow/namespace accordingly.
-- Sample data: 4 synthetic, anonymized interviews already themed around AI
-  governance in regulated industries (healthcare CISO, bank head of data,
-  manufacturing VP, privacy counsel) — a natural fit for the compliance
-  framing, no rework needed there.
+- **Demo scenario built:** replaced the generic sample data with a coherent,
+  fully synthetic SOC 2 Type II readiness engagement for a fictional bank
+  (Northfield Mutual) — 5 interview transcripts (CISO, infrastructure, SRE,
+  vendor risk, compliance) + 4 policy excerpts + a gap assessment memo. Spec
+  in [`SCENARIO.md`](SCENARIO.md); `eval/ground_truth.json` rewritten to match
+  (10 queries mapped to the new corpus).
 
 ## 🔜 Remaining steps to submit
 
@@ -66,11 +78,13 @@ change; the framing, UI modes, and prompts did.
 
 ## 👥 Peer review plan
 
-Planning to exchange peer reviews with **Hoc, Ravi, and Harish**. The course
+Reached out to **4 people** about a reciprocal review exchange, 3 named so
+far: **Hoc, Ravi, and Harish** (+ 1 more to confirm/name here). The course
 requires reviewing 3 peers' projects to become certificate-eligible — confirm
 with each of them that the review is reciprocal (they review ARIA, and I
-review theirs) and check the cohort's review-submission deadline before it
-closes: https://courses.datatalks.club/llm-zoomcamp-2026/homework/project
+review theirs), and check the review-submission deadline on the project page
+(it may differ from the project submission deadline above):
+https://courses.datatalks.club/llm-zoomcamp-2026/project/project2
 
 ## Certificate requirement (confirmed from the course README)
 

@@ -15,6 +15,13 @@ Built as the capstone for **LLM Zoomcamp 2026**.
 > base with retrieval-augmented, cited answers, themed evidence extraction,
 > and briefing drafts — so research that used to take hours takes seconds.
 
+**Demo scenario:** the sample corpus simulates SOC 2 Type II readiness for a
+fictional bank's website hosting environment — interview transcripts across
+five roles (CISO, infrastructure, SRE, vendor risk, compliance) plus policy
+documents and a gap assessment. See [`SCENARIO.md`](SCENARIO.md) for the full
+spec (client, scope, Trust Services Criteria, personas, document set).
+Everything in `data/sample/` is synthetic and fictional.
+
 ---
 
 ## Problem description
@@ -28,6 +35,10 @@ it's a compliance incident. ARIA ingests the corpus into a hybrid-search
 knowledge base and uses an LLM to answer questions, extract evidence, and
 draft briefings — **grounded in the source material, with citations**, not
 the model's imagination.
+
+The included demo scenario ([`SCENARIO.md`](SCENARIO.md)) makes this concrete:
+a fictional bank, Northfield Mutual, preparing SOC 2 Type II evidence for the
+infrastructure hosting its public website and online banking portal.
 
 ## Data & privacy (important)
 
@@ -90,13 +101,13 @@ docker compose exec app python -m ingestion.ingest
 Local (no Docker) equivalents are in the `Makefile`: `make model`, `make ingest`,
 `make app`, `make dashboard`.
 
-### Example
+### Example (using the SOC 2 demo scenario — see [`SCENARIO.md`](SCENARIO.md))
 
 | Mode | Input | Output |
 |------|-------|--------|
-| 💬 Chat | "Why do regulated orgs prefer deterministic workflows over agents?" | Grounded answer citing `[interview_01…]`, `[interview_02…]` |
-| 📌 Evidence | "fear of the AI black box" | Verbatim quotes + sources (auditable trail) |
-| 📋 Briefing | "how regulated industries govern AI agent adoption" | 4-6 section briefing outline with sources |
+| 💬 Chat | "What encryption do we use for data in transit to the website?" | Grounded answer citing `[transcript_02_infra_lead.md]`, `[policy_information_security.md]` |
+| 📌 Evidence | "evidence our incident response plan is tested annually" | Verbatim quotes + sources (auditable trail) |
+| 📋 Briefing | "SOC 2 readiness status for the audit committee" | 4-6 section briefing outline with sources |
 
 ---
 

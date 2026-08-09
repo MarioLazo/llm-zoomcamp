@@ -1,10 +1,12 @@
 [
-  {"query": "Why do regulated organizations prefer deterministic workflows over agents?", "relevant": ["interview_01_healthcare_ciso.md", "interview_02_bank_head_of_data.md"]},
-  {"query": "What is the risk of a hallucinated number in a financial report?", "relevant": ["interview_02_bank_head_of_data.md"]},
-  {"query": "How do you build team trust in AI systems?", "relevant": ["interview_03_manufacturing_vp.md"]},
-  {"query": "Why treat privacy as a design constraint instead of a checkbox?", "relevant": ["interview_04_privacy_lawyer.md"]},
-  {"query": "What is the value of coding agents in a hospital environment?", "relevant": ["interview_01_healthcare_ciso.md"]},
-  {"query": "Why measure the failure rate of AI-generated code?", "relevant": ["interview_03_manufacturing_vp.md"]},
-  {"query": "Should you index on data you don't have rights to?", "relevant": ["interview_04_privacy_lawyer.md"]},
-  {"query": "What matters more than the agent itself in governance?", "relevant": ["interview_01_healthcare_ciso.md"]}
+  {"query": "What encryption do we use for data in transit to the website?", "relevant": ["transcript_02_infra_lead.md", "policy_information_security.md"]},
+  {"query": "How often is the incident response plan tested?", "relevant": ["transcript_01_ciso.md", "transcript_03_sre_lead.md", "policy_incident_response.md"]},
+  {"query": "What is our recovery time objective for the website?", "relevant": ["transcript_03_sre_lead.md"]},
+  {"query": "What SOC 2 evidence do we require from third-party vendors?", "relevant": ["transcript_04_vendor_risk_manager.md", "policy_vendor_risk_management.md"]},
+  {"query": "What is required for an emergency break-glass change to production?", "relevant": ["transcript_02_infra_lead.md", "policy_change_management.md"]},
+  {"query": "What are the top gaps identified before the SOC 2 audit?", "relevant": ["transcript_05_compliance_manager.md", "soc2_readiness_gap_assessment.md"]},
+  {"query": "Which Trust Services Criteria are in scope for this engagement?", "relevant": ["transcript_05_compliance_manager.md", "soc2_readiness_gap_assessment.md"]},
+  {"query": "How does access control work for production systems?", "relevant": ["transcript_01_ciso.md", "policy_information_security.md"]},
+  {"query": "How is network traffic segmented between the website and core banking systems?", "relevant": ["transcript_02_infra_lead.md", "policy_information_security.md"]},
+  {"query": "What monitoring and alerting tools detect incidents on the website?", "relevant": ["transcript_03_sre_lead.md"]}
 ]
