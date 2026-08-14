@@ -178,21 +178,35 @@ LLM Zoomcamp knowledge base, held until reviewed:
 
 ## 👥 Peer review plan
 
-Reached out to **4 people** about a reciprocal review exchange, 3 named so
-far: **Hoc, Ravi, and Harish** (+ 1 more to confirm/name here). The course
-requires reviewing 3 peers' projects to become certificate-eligible — confirm
-with each of them that the review is reciprocal (they review ARIA, and I
-review theirs), and check the review-submission deadline on the project page
-(it may differ from the project submission deadline above):
-https://courses.datatalks.club/llm-zoomcamp-2026/project/project2
+**Correction (2026-08-14):** peer review on this platform is **randomly
+assigned, not self-arranged.** Confirmed directly from DataTalksClub's own
+docs (datatalks.club/docs/courses/zoomcamp-logistics/peer-review/): after the
+submission deadline closes and the cohort lead opens the review period
+(announced via Slack/Telegram), the platform automatically assigns **3
+other students' projects** to your dashboard to review, and **3 random
+students** are assigned to review ARIA. No picking, no manual coordination.
 
-**[`PEER_REVIEW.md`](PEER_REVIEW.md)** is the reviewer-facing doc — send that
-link (at the submitted commit) to each of the 4, not this file. It covers
-what the project is, what I was testing/learning, an honest lessons-learned
-summary (the 10 bugs, the eval-tooling bug specifically), a rubric-mapped
-checklist of what to verify, and 3 specific questions I want their judgment
-on. Draft the outreach email/message once the commit is pushed — link to
-`PEER_REVIEW.md` at that exact commit, not a moving `main` branch link.
+**Earlier plan was wrong** — Hoc, Ravi, and Harish are personal friends, not
+LLM Zoomcamp participants; a "reciprocal exchange" with them wouldn't satisfy
+the actual requirement (the platform needs to record the review, and the
+people reviewing/being reviewed are drawn from the cohort by the system, not
+chosen by the student). No outreach email needed — there's no one to email.
+
+**What actually happens next:**
+1. Submit the project form (repo link + commit hash) — see remaining steps
+   above.
+2. Wait for the peer-review-period announcement (Slack #course-llm-zoomcamp
+   or Telegram t.me/llm_zoomcamp) — don't expect assignments before this.
+3. Once assigned, review the 3 projects on the dashboard using the same
+   rubric this project was built against (`project.md`'s evaluation
+   criteria — see the README's rubric map for the same structure).
+4. Certificate requires all 3 reviews completed, not just the project
+   submission.
+
+**[`PEER_REVIEW.md`](PEER_REVIEW.md)** stays useful regardless — it's what
+whoever gets randomly assigned to review ARIA will actually read. Nothing to
+send it to in advance; it just needs to be in the repo at the commit
+submitted.
 
 ## Certificate requirement (confirmed from the course README)
 
