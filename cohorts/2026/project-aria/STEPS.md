@@ -167,7 +167,9 @@ LLM Zoomcamp knowledge base, held until reviewed:
 ## ❓ Open items still to decide
 
 - **Learning-in-public links** (submission form allows up to 14, optional) —
-  none identified yet.
+  ✅ [`LESSONS_LEARNED.md`](LESSONS_LEARNED.md) now exists (gotchas, root
+  causes, honest eval results). Use its GitHub blob URL at the submitted
+  commit as one of the 14 links.
 - **Hours spent** (submission form field) — not tracked yet; estimate before
   submitting.
 - **Certificate name** — confirm exact spelling to use on the form.

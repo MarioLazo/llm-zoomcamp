@@ -47,7 +47,8 @@ to test:
 
 ## Lessons learned (the honest version)
 
-I'd rather show you the real process than a polished-after-the-fact story:
+I'd rather show you the real process than a polished-after-the-fact story
+(full writeup with root-cause detail on each: [`LESSONS_LEARNED.md`](LESSONS_LEARNED.md)):
 
 - **10 real bugs were found and fixed by actually running the code**, not
   by review alone — a version-pin conflict, a Qdrant server-side inference

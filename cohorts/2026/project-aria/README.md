@@ -5,7 +5,10 @@ over interview transcripts and policy documents. Ask grounded questions, pull
 verbatim quotes as an auditable evidence trail, and draft compliance briefings
 — all cited to source, evaluated for quality, and monitored in production.
 
-Built as the capstone for **LLM Zoomcamp 2026**.
+Built as the capstone for **LLM Zoomcamp 2026**. Building this hit 10 real
+bugs and a couple of eval results I didn't expect — see
+[**`LESSONS_LEARNED.md`**](LESSONS_LEARNED.md) for the honest, learning-in-public
+writeup (gotchas, root causes, and what I'd tell the next person).
 
 > **Why this exists.** Compliance and regulatory officers sit on stacks of
 > interview transcripts, policy documents, and governance discussions that are
