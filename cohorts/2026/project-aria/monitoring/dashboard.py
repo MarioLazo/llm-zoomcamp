@@ -34,11 +34,20 @@ vol = interactions.set_index("ts").resample("1H").size()
 st.line_chart(vol)
 
 # --- Chart 2: latency distribution ------------------------------------------
+# pd.cut() bins have a pandas IntervalIndex, which Vega-Lite (via st.bar_chart)
+# can't serialize — raises SchemaValidationError ("invalid value for `0`").
+# Found by actually opening the dashboard; cast the bin labels to str first.
 st.subheader("2 · Latency distribution (ms)")
-st.bar_chart(pd.cut(interactions["latency_ms"], bins=10).value_counts().sort_index())
+latency_dist = pd.cut(interactions["latency_ms"], bins=10).value_counts().sort_index()
+latency_dist.index = latency_dist.index.astype(str)
+st.bar_chart(latency_dist)
 
 # --- Chart 3: tokens (cost proxy) by model ----------------------------------
-st.subheader("3 · Avg output tokens by model")
+st.subheader("3 · Avg output tokens by model (cost proxy)")
+st.caption(
+    "Token counts, not $ — convert using your provider's current per-token "
+    "pricing page rather than a hardcoded rate baked into this dashboard."
+)
 st.bar_chart(interactions.groupby("model")["tokens_out"].mean())
 
 # --- Chart 4: usage by mode -------------------------------------------------
@@ -46,8 +55,11 @@ st.subheader("4 · Queries by mode")
 st.bar_chart(interactions["mode"].value_counts())
 
 # --- Chart 5: retrieval quality (top rerank score) --------------------------
+# Same IntervalIndex serialization issue as Chart 2 — see note there.
 st.subheader("5 · Top retrieval score distribution")
-st.bar_chart(pd.cut(interactions["top_score"], bins=10).value_counts().sort_index())
+score_dist = pd.cut(interactions["top_score"], bins=10).value_counts().sort_index()
+score_dist.index = score_dist.index.astype(str)
+st.bar_chart(score_dist)
 
 # --- Chart 6: feedback breakdown --------------------------------------------
 st.subheader("6 · User feedback")

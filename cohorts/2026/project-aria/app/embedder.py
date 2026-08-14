@@ -10,10 +10,17 @@ import onnxruntime as ort
 from tokenizers import Tokenizer
 
 
+# all-MiniLM-L6-v2 was trained with a 512-token position limit; chunks up to
+# CHUNK_SIZE=2000 chars can exceed that, so truncation must be explicit —
+# without it, over-length inputs risk an ONNX position-embedding error.
+MAX_SEQ_LEN = 512
+
+
 class Embedder:
     def __init__(self, path="models/Xenova/all-MiniLM-L6-v2"):
         path = Path(path)
         self.tokenizer = Tokenizer.from_file(str(path / "tokenizer.json"))
+        self.tokenizer.enable_truncation(max_length=MAX_SEQ_LEN)
         self.session = ort.InferenceSession(
             str(path / "model.onnx"), providers=["CPUExecutionProvider"]
         )

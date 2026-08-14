@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS interactions (
     id            SERIAL PRIMARY KEY,
     ts            TIMESTAMPTZ NOT NULL DEFAULT now(),
-    mode          TEXT NOT NULL,           -- chat | quotes | slides
+    mode          TEXT NOT NULL,           -- chat | evidence | briefing
     query         TEXT NOT NULL,
     rewritten     TEXT,
     answer        TEXT,

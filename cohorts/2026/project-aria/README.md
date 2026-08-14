@@ -73,8 +73,10 @@ transcripts / policy docs (LEkE output / data/sample)
                                    Monitoring dashboard (6 charts)
 ```
 
-**Stack:** Qdrant · Kestra · ONNX `all-MiniLM-L6-v2` · Claude (Haiku+Sonnet) with
-Gemini Flash fallback · cross-encoder rerank · Streamlit · Postgres · Docker Compose.
+**Stack:** Qdrant · Kestra · ONNX `all-MiniLM-L6-v2` · Gemini 2.5 Flash (primary,
+paid tier) with Claude (Sonnet 5 / Haiku 4.5) fallback · cross-encoder rerank ·
+Streamlit · Postgres · Docker Compose. Provider choice is a deliberate,
+measured decision — see [Evaluation](#evaluation) below.
 
 ---
 
@@ -82,7 +84,7 @@ Gemini Flash fallback · cross-encoder rerank · Streamlit · Postgres · Docker
 
 ```bash
 # 1. configure secrets
-cp .env.example .env        # add ANTHROPIC_API_KEY (and/or GEMINI_API_KEY)
+cp .env.example .env        # add GEMINI_API_KEY (primary); ANTHROPIC_API_KEY optional (fallback)
 
 # 2. start everything (Qdrant, Postgres, app, dashboard, Kestra)
 make up                     # docker compose up -d --build
@@ -116,15 +118,106 @@ Local (no Docker) equivalents are in the `Makefile`: `make model`, `make ingest`
 Run after ingestion:
 
 ```bash
-python -m eval.retrieval_eval    # text vs vector vs hybrid vs hybrid+rerank
-python -m eval.llm_eval          # prompt variants judged by LLM-as-judge
+python -m eval.retrieval_eval     # text vs vector vs hybrid vs hybrid+rerank
+python -m eval.llm_eval           # prompt variants judged by LLM-as-judge
+python -m eval.integrity_checks   # citation integrity + prompt-injection probes
 ```
 
-- **Retrieval** ([`eval/retrieval_eval.py`](eval/retrieval_eval.py)) — Hit-Rate@5
-  and MRR@5 across **four** approaches against [`eval/ground_truth.json`](eval/ground_truth.json);
-  the best (hybrid+rerank) is what the app uses.
-- **LLM** ([`eval/llm_eval.py`](eval/llm_eval.py)) — **two** system-prompt variants
-  scored on faithfulness + relevance by an LLM judge; the winner ships.
+### Retrieval ([`eval/retrieval_eval.py`](eval/retrieval_eval.py))
+
+Hit-Rate@5, MRR@5, and Recall@5 (completeness — several ground-truth queries
+have 2-3 correct source docs, so Hit-Rate alone can hide a method missing half
+the evidence trail) across **four** approaches, against
+[`eval/ground_truth.json`](eval/ground_truth.json):
+
+| Method | Hit@5 | MRR@5 | Recall@5 |
+|---|---:|---:|---:|
+| text (BM25) | 1.000 | 0.875 | 1.000 |
+| vector | 1.000 | 0.820 | 0.917 |
+| hybrid | 1.000 | **0.920** | 1.000 |
+| hybrid+rerank | 1.000 | 0.883 | 1.000 |
+
+**Honest result, not cherry-picked:** plain `hybrid` narrowly edged out
+`hybrid+rerank` on MRR this run. At only 10 ground-truth queries with every
+method already at a perfect 1.000 Hit-Rate, there's a ceiling effect — little
+room for reranking to show a measurable lift, and the gap is plausibly noise
+at this sample size. The app still ships hybrid+rerank: it's the more
+principled default (reranking is a well-established practice, not something
+this narrow a probe should overturn), and it costs nothing extra to keep.
+Independent of the ranking question, retrieval is provider-agnostic — it
+doesn't call an LLM, so this table is identical regardless of which model
+answers the question.
+
+### LLM answer quality ([`eval/llm_eval.py`](eval/llm_eval.py))
+
+Two system-prompt variants (baseline vs. citation-strict) scored on
+faithfulness + relevance (1-5) by an LLM judge, run against **both** provider
+configurations for a real comparison, not an estimate:
+
+| Provider | Variant | Faithfulness | Relevance | Tokens (40 calls) |
+|---|---|---:|---:|---:|
+| Claude (Sonnet+Haiku) | baseline | 5.00 | 5.00 | 115,913 |
+| Claude (Sonnet+Haiku) | citation_strict | 4.80 | 4.80 | ↑ |
+| Gemini 2.5 Flash | baseline | 5.00 | 5.00 | 84,548 |
+| Gemini 2.5 Flash | citation_strict | 5.00 | 5.00 | ↑ |
+
+Both providers hit or nearly hit the ceiling — with 10 queries and a 1-5
+scale, this isn't enough signal to call a real quality winner between them.
+**Gemini used ~27% fewer tokens** for the identical workload (mostly shorter
+outputs: 2,042 vs 4,588 output tokens), which is the more decisive
+difference — see [Provider comparison](#provider-comparison-claude-vs-gemini)
+below.
+
+### Citation integrity & security ([`eval/integrity_checks.py`](eval/integrity_checks.py))
+
+Two checks a standard accuracy/relevance eval doesn't cover for a compliance
+tool:
+
+1. **Citation integrity** — does every `[filename]` cited in an answer match
+   a source that was actually retrieved, or is it hallucinated? Distinct from
+   "faithfulness" above — an answer can be faithful to the *wrong* cited
+   source.
+2. **Security** — 3 prompt-injection probes (fake system overrides, requests
+   to drop citations or invent findings). Reported for manual review, not
+   auto-graded, since detecting a jailbreak by string-matching is unreliable.
+
+| Provider | Citation violations | Injection probes resisted |
+|---|---:|---:|
+| Claude | 0 / 10 | 3 / 3 |
+| Gemini | 0 / 10 | 3 / 3 |
+
+**A bug worth documenting, not hiding:** the first Gemini run showed 4/10
+"violations." It wasn't a real gap — Gemini formats multi-source citations as
+`[a.md, b.md]` in one bracket, while Claude uses separate brackets per source
+(`[a.md][b.md]`). The citation-checker's regex only handled Claude's style,
+so it flagged Gemini's correctly-cited, differently-formatted answers as
+hallucinations. Fixed the regex to match filenames individually rather than
+whole bracket contents; both providers came back at 0/10. Kept as a reminder
+that eval tooling itself needs to be tested across the systems it evaluates,
+not validated against just one.
+
+### Provider comparison: Claude vs Gemini
+
+| | Claude (Sonnet 5 + Haiku 4.5) | Gemini 2.5 Flash |
+|---|---:|---:|
+| `llm_eval` tokens (40 calls) | 115,913 | 84,548 |
+| `integrity_checks` tokens (13 calls) | 32,828 | 29,067 |
+| **Combined** | **148,741** | **113,615** |
+| Citation integrity | 0/10 violations | 0/10 violations |
+| Injection resistance | 3/3 | 3/3 |
+| Free tier | none used (metered) | 20 req/day cap — hit it mid-eval |
+| Cost | metered, pay-per-token | paid tier ($25 credit added) |
+
+**Why Gemini ships as the default:** quality is a genuine tie on this corpus
+and task, Gemini used ~24% fewer tokens for the same work, and it's already
+funded. Claude stays wired as the fallback (`app/llm.py`) so a Gemini outage
+degrades gracefully rather than failing closed. Worth noting: "tokens" aren't
+a strictly identical unit across providers (different tokenizers), so this
+comparison is directional evidence for a real decision, not a precise
+cost-per-token benchmark — see `.env.example` for the free-tier gotcha that
+forced this investigation in the first place (20 requests/**day**, not
+per-minute, easy to blow through with an eval script that fires dozens of
+calls).
 
 ---
 
@@ -161,10 +254,11 @@ mode, retrieval-score distribution, and feedback breakdown.
 | Containerization | `docker-compose.yml` (all services) |
 | Reproducibility | this section + pinned `requirements.txt` + sample data |
 | Best practices | hybrid search · reranking · query rewriting (above) |
-| Bonus | MCP server (`mcp_server/server.py`) |
+| Bonus | MCP server (`mcp_server/server.py`); citation-integrity + security probes (`eval/integrity_checks.py`); measured Claude-vs-Gemini provider comparison (Evaluation section) |
 
 See [`STEPS.md`](STEPS.md) for build status, remaining steps to submit, and
-the peer review plan.
+the peer review plan. **Reviewing this project?** Start with
+[`PEER_REVIEW.md`](PEER_REVIEW.md) instead — it's written for you.
 
 ---
 

@@ -4,9 +4,9 @@ import os
 # --- LLM ---
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-PRIMARY_LLM = os.getenv("PRIMARY_LLM", "claude")  # claude | gemini
-CLAUDE_FAST_MODEL = os.getenv("CLAUDE_FAST_MODEL", "claude-3-5-haiku-20241022")
-CLAUDE_SMART_MODEL = os.getenv("CLAUDE_SMART_MODEL", "claude-3-5-sonnet-20241022")
+PRIMARY_LLM = os.getenv("PRIMARY_LLM", "gemini")  # claude | gemini — gemini default: free tier
+CLAUDE_FAST_MODEL = os.getenv("CLAUDE_FAST_MODEL", "claude-haiku-4-5-20251001")
+CLAUDE_SMART_MODEL = os.getenv("CLAUDE_SMART_MODEL", "claude-sonnet-5")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
 # --- Infra ---

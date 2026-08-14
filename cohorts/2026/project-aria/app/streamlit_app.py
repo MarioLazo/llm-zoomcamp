@@ -27,9 +27,9 @@ mode = st.radio(
 )
 
 placeholder = {
-    "chat": "What controls did we describe for vendor AI risk?",
-    "evidence": "Theme: fear of losing control to an AI black box",
-    "briefing": "Topic: how regulated industries govern AI agent adoption",
+    "chat": "What encryption do we use for data in transit to the website?",
+    "evidence": "evidence our incident response plan is tested annually",
+    "briefing": "SOC 2 readiness status for the audit committee",
 }[mode]
 
 query = st.text_input("Your request", placeholder=placeholder)

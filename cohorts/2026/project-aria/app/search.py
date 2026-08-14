@@ -8,7 +8,7 @@ from __future__ import annotations
 from qdrant_client import QdrantClient
 from qdrant_client import models as qm
 
-from . import config
+from . import bm25, config
 from .embedder import Embedder
 
 
@@ -32,7 +32,7 @@ class InterviewSearch:
     def text_search(self, query: str, limit: int = 10):
         hits = self.client.query_points(
             self.collection,
-            query=qm.Document(text=query, model="Qdrant/bm25"),
+            query=bm25.sparse_vector(query),
             using="bm25",
             limit=limit,
             with_payload=True,
@@ -47,7 +47,7 @@ class InterviewSearch:
             prefetch=[
                 qm.Prefetch(query=vec, using="dense", limit=limit * 2),
                 qm.Prefetch(
-                    query=qm.Document(text=query, model="Qdrant/bm25"),
+                    query=bm25.sparse_vector(query),
                     using="bm25",
                     limit=limit * 2,
                 ),

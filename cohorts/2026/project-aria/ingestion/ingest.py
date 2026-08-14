@@ -17,7 +17,7 @@ import uuid
 from qdrant_client import QdrantClient
 from qdrant_client import models as qm
 
-from app import config
+from app import bm25, config
 from app.embedder import Embedder
 
 
@@ -72,6 +72,7 @@ def run(client: QdrantClient | None = None):
 
     embedder = Embedder()
     vectors = embedder.encode_batch([c["content"] for c in chunks])
+    sparse_vectors = bm25.sparse_vectors_batch([c["content"] for c in chunks])
 
     client = client or QdrantClient(url=config.QDRANT_URL)
     ensure_collection(client)
@@ -79,13 +80,10 @@ def run(client: QdrantClient | None = None):
     points = [
         qm.PointStruct(
             id=str(uuid.uuid4()),
-            vector={
-                "dense": vec.tolist(),
-                "bm25": qm.Document(text=c["content"], model="Qdrant/bm25"),
-            },
+            vector={"dense": vec.tolist(), "bm25": svec},
             payload=c,
         )
-        for c, vec in zip(chunks, vectors)
+        for c, vec, svec in zip(chunks, vectors, sparse_vectors)
     ]
     client.upsert(config.QDRANT_COLLECTION, points=points)
     print(f"Upserted {len(points)} points into '{config.QDRANT_COLLECTION}'")
