@@ -27,6 +27,31 @@ Everything in `data/sample/` is synthetic and fictional.
 
 ---
 
+## Status & remaining to-dos
+
+**Project submitted** 2026-08-14 (commit `e1f4162`) for LLM Zoomcamp 2026,
+Project Attempt 2. What's actually left is not code — it's a course-process
+step with a real deadline:
+
+- [ ] **Peer review — not yet assigned, watch for it.** DataTalksClub
+  assigns 3 other projects to review (and 3 reviewers to ARIA) via random
+  platform assignment, announced on Slack/Telegram once the cohort lead
+  opens the review period. No notification pushes this — check the course
+  dashboard after the announcement. **The review deadline is ~1 week from
+  assignment, not from the project deadline** — per the course's own docs,
+  missing it fails the project regardless of the scores received, and is
+  the most common reason a passing project doesn't get a certificate.
+- [ ] Complete the 3 assigned reviews within that window.
+- [ ] Check back 1-2 weeks after the review deadline for ARIA's own
+  scores/certificate status (also not pushed — check the platform).
+- [ ] *(Optional, not required)* Deploy publicly (Streamlit Community Cloud
+  or similar) for the +2 cloud-deployment bonus point, if time allows.
+
+Full build log: [`STEPS.md`](STEPS.md). Reviewing this project?
+See [`PEER_REVIEW.md`](PEER_REVIEW.md) instead.
+
+---
+
 ## Problem description
 
 Compliance officers, risk teams, and regulatory analysts accumulate interview
