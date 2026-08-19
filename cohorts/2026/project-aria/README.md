@@ -10,6 +10,13 @@ bugs and a couple of eval results I didn't expect — see
 [**`LESSONS_LEARNED.md`**](LESSONS_LEARNED.md) for the honest, learning-in-public
 writeup (gotchas, root causes, and what I'd tell the next person).
 
+> **Post-submission enhancement.** The course project was graded at commit
+> `e1f4162` (2026-08-14). Everything below describing a fourth mode
+> (`underwriting`) and a second engagement (MOU remediation) was added
+> afterward, extending the same Northfield Mutual scenario into a second,
+> distinct compliance domain — regulated banking, not just IT/security. See
+> [`SCENARIO.md`](SCENARIO.md) for the full second-engagement writeup.
+
 > **Why this exists.** Compliance and regulatory officers sit on stacks of
 > interview transcripts, policy documents, and governance discussions that are
 > nearly impossible to search by memory. When a question comes in — "what did
@@ -258,6 +265,24 @@ feedback summary: query volume, latency distribution, tokens by model, usage by
 mode, retrieval-score distribution, and feedback breakdown.
 
 ---
+
+## Fourth mode: `underwriting` (post-submission)
+
+Given a loan file, ARIA assesses three required documentation elements
+(repayment source, cash flow, collateral valuation) against a fixed
+checklist and tags each `PRESENT` / `EXCEPTION` / `DOCUMENTED DEVIATION`
+with a citation. A deterministic checker
+([`app/underwriting_check.py`](app/underwriting_check.py)) verifies no
+citation was hallucinated and the model's own summary count is internally
+consistent — see [`SCENARIO.md`](SCENARIO.md#new-capability-underwriting-mode)
+for the full design and [`eval/mou_eval.py`](eval/mou_eval.py) for the eval,
+which checks against a *known* ground truth of which element is deliberately
+incomplete in each of the four sample loan files.
+
+`briefing` mode also gained a deterministic safety net for this scenario:
+[`app/mou_tracker.py`](app/mou_tracker.py) reads structured MOU deadline
+data independent of any LLM narrative and flags whether a drafted board
+report actually mentions every overdue/at-risk item.
 
 ## Best practices implemented
 

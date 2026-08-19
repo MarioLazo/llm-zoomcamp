@@ -21,15 +21,21 @@ st.caption("Automated Regulatory Intelligence Agent — grounded Q&A, evidence, 
 
 mode = st.radio(
     "Mode",
-    ["chat", "evidence", "briefing"],
+    ["chat", "evidence", "briefing", "underwriting"],
     horizontal=True,
-    format_func=lambda m: {"chat": "💬 Chat", "evidence": "📌 Evidence", "briefing": "📋 Briefing"}[m],
+    format_func=lambda m: {
+        "chat": "💬 Chat",
+        "evidence": "📌 Evidence",
+        "briefing": "📋 Briefing",
+        "underwriting": "🏦 Underwriting",
+    }[m],
 )
 
 placeholder = {
     "chat": "What encryption do we use for data in transit to the website?",
     "evidence": "evidence our incident response plan is tested annually",
     "briefing": "SOC 2 readiness status for the audit committee",
+    "underwriting": "Review the Riverside Construction Group loan file for documentation completeness",
 }[mode]
 
 query = st.text_input("Your request", placeholder=placeholder)

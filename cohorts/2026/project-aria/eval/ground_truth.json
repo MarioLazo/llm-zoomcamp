@@ -8,5 +8,15 @@
   {"query": "Which Trust Services Criteria are in scope for this engagement?", "relevant": ["transcript_05_compliance_manager.md", "soc2_readiness_gap_assessment.md"]},
   {"query": "How does access control work for production systems?", "relevant": ["transcript_01_ciso.md", "policy_information_security.md"]},
   {"query": "How is network traffic segmented between the website and core banking systems?", "relevant": ["transcript_02_infra_lead.md", "policy_information_security.md"]},
-  {"query": "What monitoring and alerting tools detect incidents on the website?", "relevant": ["transcript_03_sre_lead.md"]}
+  {"query": "What monitoring and alerting tools detect incidents on the website?", "relevant": ["transcript_03_sre_lead.md"]},
+  {"query": "What findings are in our MOU from the state banking regulator?", "relevant": ["mou_summary.md"]},
+  {"query": "How much farmland collateral secures the Harrow Family Farms loan?", "relevant": ["underwriting_loan_harrow_family_farms.md"]},
+  {"query": "What underwriting documentation is outstanding for the Riverside Construction loan?", "relevant": ["underwriting_loan_riverside_construction.md"]},
+  {"query": "Why doesn't the Maple Street Retail loan have a traditional cash flow statement?", "relevant": ["underwriting_loan_maple_street_retail.md"]},
+  {"query": "What repayment source analysis was done for the Dunmore Logistics renewal?", "relevant": ["underwriting_loan_dunmore_logistics.md"]},
+  {"query": "What is the status of the board minute-taking standard remediation item?", "relevant": ["mou_remediation_tracker.md", "board_minutes_compliance_committee_q2.md"]},
+  {"query": "When is the first quarterly MOU progress report due to the regulator?", "relevant": ["mou_remediation_tracker.md"]},
+  {"query": "What did the compliance committee discuss about the Riverside Construction loan file?", "relevant": ["board_minutes_compliance_committee_q2.md"]},
+  {"query": "Which MOU remediation items are complete as of the last tracker update?", "relevant": ["mou_remediation_tracker.md"]},
+  {"query": "What deficiency in loan risk ratings did the MOU identify?", "relevant": ["mou_summary.md"]}
 ]

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "F3-1",
+    "finding": "Weak underwriting documentation",
+    "item": "Adopt revised underwriting documentation checklist",
+    "owner": "T. Osei, Commercial Lending Manager",
+    "target_date": "2026-07-01",
+    "status": "complete"
+  },
+  {
+    "id": "F3-2",
+    "finding": "Weak underwriting documentation",
+    "item": "Remediate documentation exceptions identified in examiner loan sample",
+    "owner": "T. Osei, Commercial Lending Manager",
+    "target_date": "2026-08-15",
+    "status": "at_risk"
+  },
+  {
+    "id": "F3-3",
+    "finding": "Weak underwriting documentation",
+    "item": "Implement quarterly self-review of underwriting file completeness",
+    "owner": "J. Delacroix, Senior Ag Lender",
+    "target_date": "2026-09-30",
+    "status": "on_track"
+  },
+  {
+    "id": "F8-1",
+    "finding": "Governance and reporting weaknesses",
+    "item": "Correct identified errors in prior regulatory call reports",
+    "owner": "Regulatory Affairs",
+    "target_date": "2026-07-01",
+    "status": "complete"
+  },
+  {
+    "id": "F8-2",
+    "finding": "Governance and reporting weaknesses",
+    "item": "Implement systematic tracking of all open compliance obligations",
+    "owner": "Compliance Program Office",
+    "target_date": "2026-07-01",
+    "status": "complete"
+  },
+  {
+    "id": "F8-3",
+    "finding": "Governance and reporting weaknesses",
+    "item": "Formalize board meeting minute-taking standard",
+    "owner": "Corporate Secretary",
+    "target_date": "2026-08-01",
+    "status": "overdue"
+  },
+  {
+    "id": "F8-4",
+    "finding": "Governance and reporting weaknesses",
+    "item": "First quarterly MOU progress report to regulator",
+    "owner": "Compliance Program Office",
+    "target_date": "2026-09-30",
+    "status": "not_yet_due"
+  }
+]

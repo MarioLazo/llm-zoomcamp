@@ -63,3 +63,69 @@ assessment — is synthetic and fictional, written for this capstone to
 demonstrate ARIA without exposing real personal or institutional data. See
 [`README.md`](README.md#data--privacy-important) for the privacy design
 rationale.
+
+---
+
+# Second engagement: MOU Remediation — Underwriting & Board Reporting
+
+Added post-submission as an extension of the same Northfield Mutual
+scenario, demonstrating ARIA against a second, distinct compliance domain
+for the same fictional client — regulated banking (safety-and-soundness),
+not IT/security compliance.
+
+## Engagement
+
+Northfield Mutual received a Memorandum of Understanding (MOU) from its
+state banking regulator and the FDIC after a routine examination — a
+binding enforcement action with fixed remediation deadlines and ongoing
+quarterly progress reporting. Of the MOU's eight findings, this corpus
+covers two in depth:
+
+- **Finding 3 — weak underwriting documentation.** Four loan files
+  (`data/sample/underwriting_loan_*.md`) with realistic, naturally-occurring
+  documentation gaps — not labeled "MISSING," but genuinely absent, stale,
+  or substituted with a documented business rationale, the way a real file
+  would be.
+- **Finding 8 — governance and reporting weaknesses.** A structured
+  remediation tracker, board compliance-committee minutes, and structured
+  deadline data (`mou_remediation_tracker.md`, `board_minutes_*.md`,
+  `mou_items.json`) that a board report must accurately reflect — including
+  items that have slipped past their target date.
+
+## New capability: `underwriting` mode
+
+Given a loan file, ARIA assesses three required documentation elements
+(repayment source analysis, cash flow analysis, collateral valuation)
+against a fixed checklist, tagging each `PRESENT`, `EXCEPTION`, or
+`DOCUMENTED DEVIATION` with a citation. A deterministic checker
+(`app/underwriting_check.py`) then verifies the model didn't hallucinate a
+citation and didn't contradict its own summary count — the same
+citation-integrity discipline `eval/integrity_checks.py` already applies to
+`chat` mode, applied here to a structured checklist instead of prose.
+
+## Enhanced capability: `briefing` mode for board reporting
+
+No new mode needed — `briefing` already produces grounded, cited,
+multi-section outlines. What's new is a deterministic safety net
+(`app/mou_tracker.py`) that reads the structured deadline data independent
+of any LLM narrative and checks whether the drafted report actually mentions
+every item that's overdue or at-risk — catching the exact failure mode
+Finding 8 was issued for (a slipping item silently dropped from a board
+report).
+
+## Why this exercises ARIA well
+
+- 🏦 **Underwriting**: "Review the Riverside Construction Group loan file
+  for documentation completeness" — should correctly flag the missing
+  independent equipment appraisal, distinct from Maple Street Retail's
+  documented (and legitimate) absence of a traditional cash flow statement.
+- 📋 **Briefing**: "Draft a board update on MOU remediation progress this
+  quarter" — should surface the overdue board minute-taking standard and
+  the at-risk underwriting exceptions, not just the completed items.
+
+## Evaluation
+
+See [`eval/mou_eval.py`](eval/mou_eval.py) — unlike the retrieval/LLM evals
+above, this checks against a *known ground truth* of which element is
+deliberately incomplete in each loan file, so it measures whether ARIA finds
+the actual planted gaps, not just whether it produces well-formed output.
