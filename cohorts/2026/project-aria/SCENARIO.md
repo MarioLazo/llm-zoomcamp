@@ -129,3 +129,46 @@ See [`eval/mou_eval.py`](eval/mou_eval.py) — unlike the retrieval/LLM evals
 above, this checks against a *known ground truth* of which element is
 deliberately incomplete in each loan file, so it measures whether ARIA finds
 the actual planted gaps, not just whether it produces well-formed output.
+
+**Real run, 2026-08-19** (`docker compose exec app python -m eval.mou_eval`,
+after fixing the two bugs described below):
+
+| Loan file | Retrieved | Verification clean | Elements correct |
+|---|---|---|---|
+| Harrow Family Farms | ✅ | ✅ | 3/3 |
+| Riverside Construction Group | ✅ | ✅ | 3/3 |
+| Maple Street Retail Partners | ✅ | ✅ | 3/3 |
+| Dunmore Logistics | ✅ | ✅ | 3/3 |
+
+**Element-level accuracy: 12/12.** Board/regulatory reporting: both flagged
+(overdue/at-risk) items were correctly mentioned in the drafted briefing —
+`coverage_report()` clean, zero missed.
+
+**Two real bugs found and fixed while building this, not before:**
+
+1. **Query rewriting was dropping borrower names.** "Review the Dunmore
+   Logistics loan file" was rewritten into a generic "loan documentation
+   checklist" — losing the one word retrieval needed — causing the wrong
+   file to be retrieved with high confidence. Different borrowers failed on
+   different runs, consistent with the LLM-driven rewrite behaving
+   non-deterministically. Fixed by skipping the rewrite step for
+   `underwriting` mode entirely: exact-entity lookups don't benefit from
+   generalization the way open-ended synthesis questions do.
+2. **The deterministic checker's own regex had a line-merging bug.**
+   `underwriting_check.py`'s element-parsing regex used `[^:]+` (matches
+   any character except a colon, including newlines and mid-word hyphens),
+   so a bullet containing something like "trailing 3-year statements"
+   could make the regex anchor on that hyphen and greedily consume text
+   through the *next* colon — silently merging two checklist lines into
+   one and dropping a real element. Fixed by anchoring to line start
+   (`^-\s*`, `re.MULTILINE`) and excluding newlines from the element
+   capture group (`[^:\n]+`). Caught by the project's first unit tests
+   ([`tests/test_underwriting_check.py`](tests/test_underwriting_check.py)),
+   which is exactly why they were worth writing.
+
+A subtler lesson underneath both: the app container doesn't live-mount the
+source, so host-side edits don't take effect until the image is rebuilt —
+several eval runs during development silently tested stale, pre-fix code
+without any error to signal it. Both bugs above were real; the first
+"12/12" figure was not seen until after a clean rebuild confirmed the fixes
+were actually running.

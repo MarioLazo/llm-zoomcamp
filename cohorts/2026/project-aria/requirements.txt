@@ -12,3 +12,4 @@ psycopg[binary]==3.2.3
 pandas==2.2.3
 python-dotenv==1.0.1
 mcp==1.2.0
+pytest==9.1.1
